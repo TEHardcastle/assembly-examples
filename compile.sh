@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir bin
-mkdir obj
+mkdir -p bin
+mkdir -p obj
 
 for folder in src/*
 do

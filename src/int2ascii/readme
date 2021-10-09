@@ -1,0 +1,6 @@
+This program puts a 4 digit decimal integer into the eax register and generates 4 bytes in the 
+ebx register that correspond to the ascii characters representing the integer.
+
+For example if it starts with the integer 1234 in the eax register, it will have the bytes 0x31 0x32 0x33 0x34 in the b register when it finishes.
+
+The value is returned as the return value of the program, however as return values roll over after 255 echoing $? will not return the expected number. The best way to verify this is working is running it with gdb (gdb ./int2ascii), setting a break point at end (gdb command: break end), running the program in gdb (gdb command: r), and inspecting the ebx register (gdb command: i r ebx). This will output the contents of the ebx register.
