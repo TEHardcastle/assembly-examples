@@ -13,7 +13,7 @@
 .section .text
 .globl _start
 _start:
-mov $7496, %ecx
+mov $2345, %ecx
 mov $1000, %eax
 mov $10, %ebx
 loop_start:
@@ -22,16 +22,10 @@ js blah
 inc %dl
 jmp loop_start
 blah:
-cmp $1, %eax
-je fin
 add %eax, %ecx
-div %bl
+div %ebx
+here:
 shl $8, %edx
 jmp loop_start
-fin:
-add $0x30303030, %edx
-mov $1, %eax
-mov %edx, %ebx
-fini:
-int $0x80
+nop
 
