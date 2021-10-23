@@ -15,23 +15,23 @@
 _start:
 mov $7496, %ecx
 mov $1000, %eax
-mov $10, %ebx
+mov $10, %edx
 loop_start:
 sub %eax, %ecx
-js blah
-inc %dl
+js next_char
+inc %bl
 jmp loop_start
-blah:
+next_char:
 cmp $1, %eax
-je fin
+je end
 add %eax, %ecx
-div %bl
-shl $8, %edx
+div %dl
+shl $8, %ebx
 jmp loop_start
-fin:
-add $0x30303030, %edx
+end:
+xor %ecx, %ecx
+xor %edx, %edx
+add $0x30303030, %ebx
 mov $1, %eax
-mov %edx, %ebx
-fini:
 int $0x80
 
