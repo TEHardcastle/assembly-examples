@@ -1,0 +1,61 @@
+#!/bin/bash
+
+valid=0
+
+if [[ $1 == "all" ]]
+then
+	valid=1
+
+	mkdir -p bin
+	mkdir -p obj
+
+	for folder in src/*
+	do
+		for FILE in $folder/*
+		do
+			file_ext=$(echo $FILE | cut -d "." -f "2")
+			file_root=$(echo $FILE | cut -d "." -f "1" | cut -d "/" -f "3")
+			if [ $file_ext = "s" ]
+			then
+				as -ggdb $FILE -o obj/$file_root.o
+				ld obj/$file_root.o -o bin/$file_root
+			fi
+		done
+	done
+fi
+
+if [[ $1 == "just" ]]
+then
+	valid=1
+
+	mkdir -p bin
+	mkdir -p obj
+
+	file_ext=$(echo $2 | cut -d "." -f "2")
+	file_root=$(echo $2 | cut -d "." -f "1" | cut -d "/" -f "3")
+	if [ $file_ext = "s" ]
+	then
+		as -ggdb $2 -o obj/$file_root.o
+		ld obj/$file_root.o -o bin/$file_root
+	else
+		valid=0
+	fi
+fi
+
+if [[ $1 == clean ]]
+then
+	valid=1
+
+	rm -r bin
+	rm -r obj
+fi
+
+if [[ valid -eq 0 ]]
+then
+	echo -e "Usage:"
+	echo -e "\t./compile [option] [file]"
+	echo -e "\nOptions:"
+	echo -e "\tall : compile and link all source"
+	echo -e "\tjust [file] : compile and link single file"
+	echo -e "\tclean : remove binaries"
+fi

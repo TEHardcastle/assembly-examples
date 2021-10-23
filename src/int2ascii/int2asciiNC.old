@@ -13,19 +13,33 @@
 .section .text
 .globl _start
 _start:
-mov $2345, %ecx
-mov $1000, %eax
-mov $10, %ebx
-loop_start:
-sub %eax, %ecx
-js blah
-inc %dl
-jmp loop_start
-blah:
-add %eax, %ecx
-idiv %ebx
-here:
-shl $8, %edx
-jmp loop_start
-nop
+mov $1111, %eax
+loop1: 
+sub $1000, %eax
+js preloop2
+inc %bl
+jmp loop1
+preloop2: 
+shl $8, %ebx
+add $1000, %eax
+loop2: 
+sub $100, %eax
+js preloop3
+inc %bl
+jmp loop2
+preloop3: 
+shl $16, %ebx
+add $100, %eax
+loop3: 
+sub $10, %eax
+js preloop4
+inc %bh
+jmp loop3
+preloop4: 
+add $10, %eax
+add %eax, %ebx
+add $0x30303030, %ebx
+end:
+mov $1, %eax
+int $0x80
 
